@@ -1,32 +1,30 @@
-import { Repository } from 'typeorm';
-import { PostEntity } from '../entities/post.entity';
-import { AppDataSource } from '../datasource';
 import { NextFunction, Request, Response } from 'express';
+import { PostService } from '../services/post.service';
 
 export class PostController {
-	private readonly postRepository: Repository<PostEntity> =
-		AppDataSource.getRepository(PostEntity);
+
+	private readonly postService: PostService = new PostService();
 
 	public async getAll(req: Request, res: Response, next: NextFunction) {
-		const post = await this.postRepository.find();
+		try {
+			const posts = await this.postService.find();
 
-		if (!post) {
-			return 'unregistered user';
+			res.send(posts);
+		} catch (error) {
+			res.json({ message: `${error}` })
+			return next(error);
 		}
-		return post;
 	}
 
 	public async getById(req: Request, res: Response, next: NextFunction) {
-		const id = parseInt(req.params.id);
-
-		const post = await this.postRepository.findOne({
-			where: { id },
-		});
-
-		if (!post) {
-			return 'unregistered user';
+		try {
+			const params = { ...req.query, id: parseInt(req.params.id) };
+			const post = await this.postService.findOne({ ...params });
+			res.send(post);
+		} catch (error) {
+			res.json({ message: `${error}` })
+			return next(error);
 		}
-		return post;
 	}
 
 	public async remove(
@@ -34,7 +32,7 @@ export class PostController {
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		res.status(200).json('remove user');
+		res.status(200).send('remove user');
 		next();
 	}
 
@@ -43,7 +41,7 @@ export class PostController {
 		res: Response,
 		next: NextFunction
 	): Promise<void> {
-		res.status(200).json('save user');
+		res.status(200).send('save user');
 		next();
 	}
 }

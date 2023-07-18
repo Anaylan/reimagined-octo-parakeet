@@ -19,6 +19,9 @@ export class PostEntity {
 	@Column()
 	description: string;
 
+	@Column({ default: undefined, nullable: true, type: 'text' })
+	image: string;
+
 	@CreateDateColumn()
 	created_at: Date;
 

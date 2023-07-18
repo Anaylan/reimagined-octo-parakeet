@@ -5,9 +5,8 @@ import { AppDataSource } from './datasource';
 AppDataSource.initialize()
 	.then(async (connection) => {
 		console.log(
-			'TypeORM connection successfully\nDriver: %s,\nDatabase: %s',
+			'TypeORM connection successfully\nDriver: %s',
 			connection.options.type,
-			connection.options.database
 		);
 		const application: Application = new Application();
 		await application.bootstrap();

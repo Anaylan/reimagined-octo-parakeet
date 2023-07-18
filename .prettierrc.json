@@ -1,0 +1,9 @@
+{
+	"trailingComma": "es5",
+	"useTabs": true,
+	"semi": true,
+	"singleQuote": true,
+	"bracketSameLine": true,
+	"embeddedLanguageFormatting": "off",
+	"jsxSingleQuote": true
+}

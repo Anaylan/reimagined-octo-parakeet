@@ -19,3 +19,8 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install
+  launch:
+    runs-on: ubuntu-20.04
+        steps:
+        - name: Run app
+    run: pnpm start:prod

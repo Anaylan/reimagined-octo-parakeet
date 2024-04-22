@@ -8,8 +8,8 @@ jobs:
       matrix:
         node-version: [18]
     steps:
-    - uses: actions/checkout@v3
-    - uses: pnpm/action-setup@v3
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
       with:
         version: 8
     - name: Use Node.js ${{ matrix.node-version }}
@@ -19,8 +19,9 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install
-  launch:
-    runs-on: ubuntu-20.04
-    steps:
-    - name: Run app
-      run: pnpm start:prod
+    - name: Publish 🚀
+      shell: bash
+      run: pnpm publish packages/components --access public --no-git-checks
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+

@@ -17,10 +17,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-    - name: Create lock file
-      run: npm i --package-lock-only
     - name: Install deps
-      run: pnpm install
+      run: npm i
     - name: Publish 🚀
       run: pnpm start:prod
       env:
